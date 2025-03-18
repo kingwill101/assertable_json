@@ -21,7 +21,7 @@ abstract class AssertableJsonBase with InteractionMixin {
   ///
   /// Example usage:
   ///
-  /// final value = json.get<int>('some.nested.path');
+  /// final value = json.get`<int>`('some.nested.path');
   ///
   T? get<T>(String path) {
     var current = json;
@@ -44,7 +44,7 @@ abstract class AssertableJsonBase with InteractionMixin {
   ///
   /// Example usage:
   ///
-  /// final value = json.getRequired<int>('some.nested.path');
+  /// final value = json.getRequired`<int>`('some.nested.path');
   T getRequired<T>(String path) {
     final value = get(path);
 

@@ -13,7 +13,7 @@ import 'assertable_json.dart';
 /// Example usage:
 ///
 /// class MyJson with InteractionMixin {
-///   final Map`<String, dynamic> _json;
+///   final Map`<String, dynamic>` _json;
 ///
 ///   @override
 ///   dynamic get json => _json;

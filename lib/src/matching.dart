@@ -17,7 +17,7 @@ import 'assertable_json_base.dart';
 ///
 /// final json = AssertableJson({'name': 'John', 'age': 30});
 /// json.where('name', 'John')
-///     .whereType<int>('age')
+///     .whereType`<int>`('age')
 ///     .whereIn('age', [25, 30, 35]);
 ///
 mixin MatchingMixin on AssertableJsonBase {

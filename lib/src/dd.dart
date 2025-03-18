@@ -1,4 +1,3 @@
-
 import 'package:assertable_json/src/assertable_json_base.dart';
 
 /// A mixin that provides debugging utilities for JSON data.

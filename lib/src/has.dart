@@ -1,4 +1,5 @@
-import 'package:assertable_json/src/assertable_json_base.dart' show AssertableJsonBase, AssertableJsonCallback;
+import 'package:assertable_json/src/assertable_json_base.dart'
+    show AssertableJsonBase, AssertableJsonCallback;
 import 'package:test/test.dart';
 import 'assertable_json.dart';
 
@@ -94,7 +95,7 @@ mixin HasMixin on AssertableJsonBase {
 
   /// Verifies the existence of all specified [keys].
   ///
-  /// Accepts either a single String or a List<String>.
+  /// Accepts either a single String or a List`<String>`.
   /// Returns this instance for method chaining.
   AssertableJson hasAll(dynamic keys) {
     if (keys is String) {
@@ -123,7 +124,7 @@ mixin HasMixin on AssertableJsonBase {
 
   /// Verifies that at least one of the specified [keys] exists.
   ///
-  /// Accepts either a single String or a List<String>.
+  /// Accepts either a single String or a List`<String>`.
   /// Returns this instance for method chaining.
   AssertableJson hasAny(dynamic keys) {
     if (keys is String) {
@@ -140,7 +141,7 @@ mixin HasMixin on AssertableJsonBase {
 
   /// Verifies that all specified [keys] are missing from the JSON.
   ///
-  /// Accepts either a single String or a List<String>.
+  /// Accepts either a single String or a List`<String>`.
   /// Returns this instance for method chaining.
   AssertableJson missingAll(dynamic keys) {
     if (keys is String) {
