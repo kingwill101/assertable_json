@@ -1,6 +1,6 @@
 name: assertable_json
 description: A package that provides a way to assert JSON objects.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/kingwill101/assertable_json
 
 topics: 
