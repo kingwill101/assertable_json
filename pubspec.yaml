@@ -1,6 +1,6 @@
 name: assertable_json
 description: A package that provides a way to assert JSON objects.
-version: 0.1.1
+version: 0.2.0
 homepage: https://github.com/kingwill101/assertable_json
 
 topics: 
@@ -12,10 +12,10 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  test: ^1.24.0
+  test: ^1.25.15
 
 dev_dependencies:
-  lints: ^5.0.0
+  lints: ^5.1.1
 
 funding:
   - https://www.buymeacoffee.com/kingwill101

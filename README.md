@@ -4,7 +4,7 @@ A powerful, fluent JSON testing utility for Dart that makes it easy to write exp
 
 ## Features
 
-- 🔍 **Property Validation**: Assert presence/absence of keys, nested properties, and values
+- 🔍 **Property Validation**: Assert presence/absence of keys, nested properties, and values using dot notation
 - 📐 **Type Checking**: Verify types with strong type safety
 - 🔢 **Numeric Assertions**: Compare numbers, check ranges, validate mathematical properties
 - 🎯 **Pattern Matching**: Test values against patterns and custom conditions
@@ -39,6 +39,7 @@ void main() {
       }
     });
 
+    // Using callback for nested scope
     json
       .has('user', (user) => user
         .has('id')
@@ -51,6 +52,16 @@ void main() {
         .isGreaterThan('age', 18)
         .has('roles')
         .count('roles', 2));
+        
+    // Or using dot notation for direct access
+    json
+      .has('user.id')
+      .whereType<int>('user.id')
+      .has('user.name')
+      .whereType<String>('user.name')
+      .whereContains('user.email', '@')
+      .isGreaterThan('user.age', 18)
+      .count('user.roles', 2);
   });
 }
 ```
@@ -65,6 +76,19 @@ json
   .hasNested('user.email')   // Check nested properties
   .hasAll(['id', 'name'])    // Check multiple properties
   .missing('deletedAt');     // Verify key doesn't exist
+```
+### Dot Notation
+
+Access nested properties directly with dot notation:
+
+```dart
+json
+  .has('user.profile.name')                  // Deep property access
+  .where('user.settings.theme', 'dark')      // Check nested values
+  .whereType<int>('user.stats.views')        // Type checking
+  .isGreaterThan('user.profile.age', 18)     // Numeric validations
+  .has('posts.0.id')                         // Array element access
+  .whereContains('user.emails.0', '@');      // Pattern matching
 ```
 
 ### Numeric Validations
@@ -132,6 +156,8 @@ response
 
 ### Array Testing
 
+You can test arrays using callback scoping:
+
 ```dart
 json
   .has('items', 3, (items) {
@@ -144,8 +170,19 @@ json
   });
 ```
 
+Or with dot notation for direct array element access:
+
+```dart
+json
+  .count('items', 3)
+  .has('items.0.id')
+  .has('items.1.name')
+  .whereType<bool>('items.2.active');
+```
+
 ## Additional Features
 
+- **Dot Notation**: Access nested properties directly with simple path syntax
 - **Property Tracking**: Automatically tracks which properties have been tested
 - **Debugging**: Built-in debugging tools with `dd()` and `printR()`
 - **Custom Assertions**: Extend with your own assertion methods
