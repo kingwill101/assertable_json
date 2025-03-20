@@ -11,19 +11,48 @@ import 'assertable_json.dart';
 /// * Count of elements
 /// * Value existence
 /// * Nested property validation
+/// * Callbacks for complex validation scenarios
 ///
 /// Example usage:
 ///
-/// final json = AssertableJson({'key': 'value'});
-/// json.has('key')
-///     .count('items', 3)
-///     .missing('nonexistent');
+/// ```dart
+/// final json = AssertableJson({
+///   'key': 'value',
+///   'items': ['item1', 'item2', 'item3'],
+///   'user': {
+///     'name': 'John',
+///     'age': 30
+///   }
+/// });
+///
+/// json.has('key')                     // Check key exists
+///     .count('items', 3)              // Check count of array
+///     .missing('nonexistent')         // Verify key doesn't exist
+///     .has('user', (user) => user     // Navigate and validate nested objects
+///         .has('name')
+///         .has('age'));
+/// ```
 ///
 mixin HasMixin on AssertableJsonBase {
   /// Verifies the count of elements at a specific key or at the root level.
   ///
-  /// If only [key] is provided, verifies the root level count.
-  /// If [length] is provided, verifies the count at the specified [key].
+  /// Usage patterns:
+  /// * `count(expectedCount)` - Verifies the root level JSON has the specified count
+  /// * `count(key, expectedCount)` - Verifies the element at [key] has the specified count
+  ///
+  /// This method supports dot notation for nested property access, and can be used
+  /// with both objects and arrays.
+  ///
+  /// ```dart
+  /// // Check root JSON object has 3 properties
+  /// json.count(3);
+  ///
+  /// // Check 'items' array has 5 elements
+  /// json.count('items', 5);
+  ///
+  /// // Check nested array using dot notation
+  /// json.count('user.permissions', 3);
+  /// ```
   ///
   /// Returns this instance for method chaining.
   AssertableJson count(dynamic key, [int? length]) {
@@ -39,7 +68,18 @@ mixin HasMixin on AssertableJsonBase {
     return this as AssertableJson;
   }
 
-  /// Verifies that the count of elements at [key] is between [min] and [max].
+  /// Verifies that the count of elements at [key] is between [min] and [max], inclusive.
+  ///
+  /// This method is useful for validating that a collection has a reasonable number
+  /// of elements without needing to check for an exact count.
+  ///
+  /// ```dart
+  /// // Check 'items' array has between 2 and 5 elements
+  /// json.countBetween('items', 2, 5);
+  ///
+  /// // Check nested array using dot notation
+  /// json.countBetween('user.posts', 1, 10);
+  /// ```
   ///
   /// Returns this instance for method chaining.
   AssertableJson countBetween(dynamic key, dynamic min, dynamic max) {
@@ -52,10 +92,29 @@ mixin HasMixin on AssertableJsonBase {
 
   /// Verifies the existence of a [key] and optionally its content.
   ///
-  /// Can be used in three ways:
-  /// * `has(key)` - Verifies key exists
-  /// * `has(key, count)` - Verifies key exists with specific count
-  /// * `has(key, count, callback)` - Verifies key exists with count and executes callback
+  /// This method is highly versatile and can be used in several ways:
+  ///
+  /// ```dart
+  /// // Simply check key exists
+  /// json.has('user');
+  ///
+  /// // Check key exists and process its value with a callback
+  /// json.has('user', (user) => user
+  ///   .has('name')
+  ///   .has('email'));
+  ///
+  /// // Check array exists with specific length
+  /// json.has('items', 3);
+  ///
+  /// // Check array exists with specific length and validate each item
+  /// json.has('items', 3, (items) => items
+  ///   .each((item) => item
+  ///     .has('id')
+  ///     .has('name')));
+  ///
+  /// // Using dot notation for nested properties
+  /// json.has('user.profile.email');
+  /// ```
   ///
   /// Returns this instance for method chaining.
   AssertableJson has(dynamic key,
@@ -85,6 +144,18 @@ mixin HasMixin on AssertableJsonBase {
 
   /// Verifies the existence of a nested property at [path].
   ///
+  /// This method is particularly useful for deep property checking using
+  /// dot notation. It provides a more explicit way to verify nested properties
+  /// compared to [has].
+  ///
+  /// ```dart
+  /// // Check a deeply nested property exists
+  /// json.hasNested('user.profile.settings.notifications');
+  ///
+  /// // Check array element property exists
+  /// json.hasNested('posts.0.comments.5.author');
+  /// ```
+  ///
   /// Returns this instance for method chaining.
   AssertableJson hasNested(String path) {
     expect(exists(path), isTrue,
@@ -95,7 +166,23 @@ mixin HasMixin on AssertableJsonBase {
 
   /// Verifies the existence of all specified [keys].
   ///
-  /// Accepts either a single String or a List`<String>`.
+  /// This method provides a convenient way to check multiple keys at once.
+  ///
+  /// ```dart
+  /// // Check multiple top-level keys
+  /// json.hasAll(['id', 'name', 'email']);
+  ///
+  /// // Using dot notation for nested properties
+  /// json.hasAll([
+  ///   'user.id',
+  ///   'user.name',
+  ///   'user.profile.avatar'
+  /// ]);
+  ///
+  /// // Can also be used with a single string
+  /// json.hasAll('username');  // Same as json.has('username')
+  /// ```
+  ///
   /// Returns this instance for method chaining.
   AssertableJson hasAll(dynamic keys) {
     if (keys is String) {
@@ -110,7 +197,20 @@ mixin HasMixin on AssertableJsonBase {
     return this as AssertableJson;
   }
 
-  /// Verifies that all specified [values] exist in the JSON.
+  /// Verifies that all specified [values] exist in the JSON object.
+  ///
+  /// This method checks that each value in the provided list exists
+  /// as a value (not a key) in the current JSON object.
+  ///
+  /// ```dart
+  /// // Check that specific values exist in the JSON
+  /// json.hasValues(['admin', 'user', 'guest']);
+  ///
+  /// // Can be combined with other methods
+  /// json
+  ///   .has('roles')
+  ///   .hasValues(['admin', 'user']);
+  /// ```
   ///
   /// Returns this instance for method chaining.
   AssertableJson hasValues(List<dynamic> values) {
@@ -124,7 +224,24 @@ mixin HasMixin on AssertableJsonBase {
 
   /// Verifies that at least one of the specified [keys] exists.
   ///
-  /// Accepts either a single String or a List`<String>`.
+  /// This method is useful when you want to ensure that at least one
+  /// of several possible keys is present in the JSON.
+  ///
+  /// ```dart
+  /// // Check that at least one of these keys exists
+  /// json.hasAny(['firstName', 'first_name', 'name']);
+  ///
+  /// // Using dot notation
+  /// json.hasAny([
+  ///   'user.profile.image',
+  ///   'user.avatar',
+  ///   'user.picture'
+  /// ]);
+  ///
+  /// // Can also be used with a single string
+  /// json.hasAny('username');  // Same as json.has('username')
+  /// ```
+  ///
   /// Returns this instance for method chaining.
   AssertableJson hasAny(dynamic keys) {
     if (keys is String) {
@@ -141,7 +258,24 @@ mixin HasMixin on AssertableJsonBase {
 
   /// Verifies that all specified [keys] are missing from the JSON.
   ///
-  /// Accepts either a single String or a List`<String>`.
+  /// This method provides a convenient way to check that multiple keys
+  /// do not exist in the JSON.
+  ///
+  /// ```dart
+  /// // Check multiple keys are missing
+  /// json.missingAll(['deleted_at', 'error', 'password']);
+  ///
+  /// // Using dot notation
+  /// json.missingAll([
+  ///   'user.creditCard',
+  ///   'user.password',
+  ///   'internal.debug'
+  /// ]);
+  ///
+  /// // Can also be used with a single string
+  /// json.missingAll('username');  // Same as json.missing('username')
+  /// ```
+  ///
   /// Returns this instance for method chaining.
   AssertableJson missingAll(dynamic keys) {
     if (keys is String) {
@@ -157,6 +291,21 @@ mixin HasMixin on AssertableJsonBase {
   }
 
   /// Verifies that the specified [key] is missing from the JSON.
+  ///
+  /// This method asserts that a property does not exist in the JSON,
+  /// which is useful for verifying that sensitive or deprecated fields
+  /// are not included.
+  ///
+  /// ```dart
+  /// // Check a key doesn't exist
+  /// json.missing('password');
+  ///
+  /// // Using dot notation
+  /// json.missing('user.creditCardNumber');
+  ///
+  /// // Checking array elements
+  /// json.missing('items.3');  // Check fourth element doesn't exist
+  /// ```
   ///
   /// Returns this instance for method chaining.
   AssertableJson missing(String key) {

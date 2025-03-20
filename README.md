@@ -19,7 +19,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  assertable_json: ^0.1.0
+  assertable_json: ^0.2.1
 ```
 
 ## Basic Usage

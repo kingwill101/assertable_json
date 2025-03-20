@@ -20,7 +20,9 @@ void main() {
     });
 
     test('whereNotIn matches non-equal value', () {
-      final json = AssertableJson({'key': [1, 2, 3]});
+      final json = AssertableJson({
+        'key': [1, 2, 3]
+      });
       json.whereNotIn('key', [4, 5, 6]);
     });
 
@@ -40,7 +42,10 @@ void main() {
     });
 
     test('whereIn matches value in list', () {
-      final json = AssertableJson({'key': 2, 'list': [1, 2, 3]});
+      final json = AssertableJson({
+        'key': 2,
+        'list': [1, 2, 3]
+      });
       json.whereIn('key', [1, 2, 3]);
       json.whereIn('list', [1, 2, 3]);
     });
