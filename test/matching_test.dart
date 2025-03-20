@@ -19,19 +19,30 @@ void main() {
       json.whereNot('key', 'wrong');
     });
 
+    test('whereNotIn matches non-equal value', () {
+      final json = AssertableJson({'key': [1, 2, 3]});
+      json.whereNotIn('key', [4, 5, 6]);
+    });
+
     test('whereType matches correct type', () {
       final json = AssertableJson({'key': 'value'});
       json.whereType<String>('key');
     });
 
     test('whereContains matches substring', () {
-      final json = AssertableJson({'key': 'test value'});
+      final json = AssertableJson({
+        'key': 'test value',
+        'list': [1, 2, 3]
+      });
       json.whereContains('key', 'value');
+
+      json.whereContains('list', [1, 2]);
     });
 
     test('whereIn matches value in list', () {
-      final json = AssertableJson({'key': 2});
+      final json = AssertableJson({'key': 2, 'list': [1, 2, 3]});
       json.whereIn('key', [1, 2, 3]);
+      json.whereIn('list', [1, 2, 3]);
     });
 
     test('matchesSchema verifies type structure', () {

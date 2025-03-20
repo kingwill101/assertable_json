@@ -127,8 +127,15 @@ mixin MatchingMixin on AssertableJsonBase {
   AssertableJson whereContains(String key, dynamic expected) {
     final actual = getRequired(key);
     if (actual is List) {
-      expect(actual.contains(expected), isTrue,
-          reason: 'Property [$key] does not contain [$expected]');
+      if (expected is List) {
+        for (var value in expected) {
+          expect(actual.contains(value), isTrue,
+              reason: 'Expected $key to contain $value');
+        }
+      } else {
+        expect(actual.contains(expected), isTrue,
+            reason: 'Expected $key to contain $expected');
+      }
     } else {
       expect(actual.toString().contains(expected.toString()), isTrue,
           reason: 'Property [$key] does not contain [$expected]');
@@ -140,8 +147,16 @@ mixin MatchingMixin on AssertableJsonBase {
   /// Asserts that a property's value is one of the provided [values].
   AssertableJson whereIn(String key, List<dynamic> values) {
     final actual = getRequired(key);
-    expect(values.contains(actual), isTrue,
-        reason: 'Expected $key to be one of $values');
+    if (actual is List) {
+      for (var value in values) {
+        expect(actual.contains(value), isTrue,
+            reason: 'Expected key `$key` to contain value $value, actual: $actual');
+      }
+    } else {
+      expect(values.contains(actual), isTrue,
+          reason: 'Expected $key to be one of $values');
+    }
+
     interactsWith(key);
     return this as AssertableJson;
   }
@@ -149,8 +164,15 @@ mixin MatchingMixin on AssertableJsonBase {
   /// Asserts that a property's value is not one of the provided [values].
   AssertableJson whereNotIn(String key, List<dynamic> values) {
     final actual = getRequired(key);
-    expect(values.contains(actual), isFalse,
-        reason: 'Expected $key to not be one of $values');
+    if (actual is List) {
+      for (var value in values) {
+        expect(actual.contains(value), isFalse,
+            reason: 'Expected key `$key` to not contain value $value, actual: $actual');
+      }
+    } else {
+      expect(values.contains(actual), isFalse,
+          reason: 'Expected $key to not be one of $values');
+    }
     interactsWith(key);
     return this as AssertableJson;
   }
