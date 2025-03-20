@@ -34,6 +34,7 @@ mixin InteractionMixin {
   /// nested properties using dot notation.
   void interactsWith(String key) {
     if (json is! List) {
+      // For dot notation, we track the root property
       final prop = key.split('.').first;
       _interacted.add(prop);
     }
@@ -44,8 +45,14 @@ mixin InteractionMixin {
   /// Throws a [TestFailure] if any properties have not been interacted with.
   /// Only applies to non-List JSON objects.
   void verifyInteracted() {
-    if (json is! List) {
-      final unInteractedKeys = json.keys.toSet().difference(_interacted);
+    if (json is! List && json is Map) {
+      final jsonKeys = json.keys.toSet();
+      // If we've interacted with all keys, or the set is empty, return early
+      if (_interacted.containsAll(jsonKeys) || jsonKeys.isEmpty) {
+        return;
+      }
+      
+      final unInteractedKeys = jsonKeys.difference(_interacted);
       expect(unInteractedKeys.isEmpty, isTrue,
           reason: 'Unexpected properties were found: $unInteractedKeys');
     }

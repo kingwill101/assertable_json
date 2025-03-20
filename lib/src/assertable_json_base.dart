@@ -29,7 +29,18 @@ abstract class AssertableJsonBase with InteractionMixin {
 
     for (var key in keys) {
       if (current == null) return null;
-      current = current[key];
+      
+      // Handle array indices in path (e.g., "array.0.property")
+      if (current is List && int.tryParse(key) != null) {
+        final index = int.parse(key);
+        if (index < 0 || index >= current.length) return null;
+        current = current[index];
+      } else if (current is Map) {
+        if (!current.containsKey(key)) return null;
+        current = current[key];
+      } else {
+        return null; // Can't navigate further
+      }
     }
 
     return current as T?;
@@ -71,9 +82,6 @@ abstract class AssertableJsonBase with InteractionMixin {
   }
 
   // Get map with type safety
-  /// Gets the map at the specified [path] and casts its values to the specified type [T].
-  ///
-  /// If the value at the specified [path] is `null` or not a [Map], this method will return an empty map.
   Map<String, T> getMap<T>(String path) {
     final map = get<Map>(path);
     return map?.cast<String, T>() ?? {};
@@ -92,9 +100,19 @@ abstract class AssertableJsonBase with InteractionMixin {
     final keys = path.split('.');
 
     for (var key in keys) {
-      if (current == null || current is! Map) return false;
-      if (!current.containsKey(key)) return false;
-      current = current[key];
+      if (current == null) return false;
+      
+      // Handle array indices in path (e.g., "array.0.property")
+      if (current is List && int.tryParse(key) != null) {
+        final index = int.parse(key);
+        if (index < 0 || index >= current.length) return false;
+        current = current[index];
+      } else if (current is Map) {
+        if (!current.containsKey(key)) return false;
+        current = current[key];
+      } else {
+        return false; // Can't navigate further
+      }
     }
     return true;
   }
@@ -183,7 +201,7 @@ abstract class AssertableJsonBase with InteractionMixin {
   /// The [interactsWith] method is also called with the [key] to track which keys
   /// have been interacted with during the assertion process.
   AssertableJson scope(String key, Function(AssertableJson) callback) {
-    final props = json[key];
+    final props = get(key);
 
     if (props == null) {
       fail('Required value at path [$key] was null');
