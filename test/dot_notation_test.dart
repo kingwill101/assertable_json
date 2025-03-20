@@ -9,10 +9,7 @@ void main() {
       'user': {
         'profile': {
           'negative': -1,
-          'name': {
-            'first': 'John',
-            'last': 'Doe'
-          },
+          'name': {'first': 'John', 'last': 'Doe'},
           'age': 30,
           'tags': ['developer', 'dart'],
           'scores': [85, 90, 95],
@@ -26,23 +23,10 @@ void main() {
         }
       },
       'posts': [
-        {
-          'id': 1,
-          'title': 'First Post',
-          'comments': 5
-        },
-        {
-          'id': 2,
-          'title': 'Second Post',
-          'comments': 10
-        }
+        {'id': 1, 'title': 'First Post', 'comments': 5},
+        {'id': 2, 'title': 'Second Post', 'comments': 10}
       ],
-      'stats': {
-        'views': 100,
-        'likes': 25,
-        'dislikes': -5,
-        'multiplier': 2.5
-      }
+      'stats': {'views': 100, 'likes': 25, 'dislikes': -5, 'multiplier': 2.5}
     });
   });
 
@@ -232,11 +216,11 @@ void main() {
   group('InteractionMixin with dot notation', () {
     test('only tracks root keys during dot notation access', () {
       json
-        .has('user.profile.name.first')
-        .where('user.profile.age', 30)
-        .has('posts.0.id')
-        .has('stats.views');  // Access all three root keys
-      
+          .has('user.profile.name.first')
+          .where('user.profile.age', 30)
+          .has('posts.0.id')
+          .has('stats.views'); // Access all three root keys
+
       // This should pass as we've interacted with all root keys
       json.verifyInteracted();
     });
@@ -244,10 +228,10 @@ void main() {
     test('marks only the root property as interacted', () {
       // Create a new JSON with just the 'user' property
       final userJson = AssertableJson({'user': json.json['user']});
-      
+
       // Access a nested property
       userJson.has('user.profile.name.first');
-      
+
       // This should pass because we've interacted with the 'user' key
       userJson.verifyInteracted();
     });
@@ -262,20 +246,20 @@ void main() {
 
     test('chained assertions with dot notation', () {
       json
-        .has('user.profile')
-        .whereType<Map>('user.profile')
-        .has('user.profile.name.first')
-        .where('user.profile.name.first', 'John')
-        .whereContains('user.profile.tags', 'dart')
-        .isGreaterThan('user.profile.age', 25);
+          .has('user.profile')
+          .whereType<Map>('user.profile')
+          .has('user.profile.name.first')
+          .where('user.profile.name.first', 'John')
+          .whereContains('user.profile.tags', 'dart')
+          .isGreaterThan('user.profile.age', 25);
     });
 
     test('mixed dot and regular notation', () {
       json
-        .has('user')
-        .has('user.profile')
-        .has('user.profile.name')
-        .has('user.profile.name.first');
+          .has('user')
+          .has('user.profile')
+          .has('user.profile.name')
+          .has('user.profile.name.first');
     });
   });
 }

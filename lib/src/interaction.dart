@@ -51,7 +51,7 @@ mixin InteractionMixin {
       if (_interacted.containsAll(jsonKeys) || jsonKeys.isEmpty) {
         return;
       }
-      
+
       final unInteractedKeys = jsonKeys.difference(_interacted);
       expect(unInteractedKeys.isEmpty, isTrue,
           reason: 'Unexpected properties were found: $unInteractedKeys');

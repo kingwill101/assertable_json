@@ -29,7 +29,7 @@ abstract class AssertableJsonBase with InteractionMixin {
 
     for (var key in keys) {
       if (current == null) return null;
-      
+
       // Handle array indices in path (e.g., "array.0.property")
       if (current is List && int.tryParse(key) != null) {
         final index = int.parse(key);
@@ -101,7 +101,7 @@ abstract class AssertableJsonBase with InteractionMixin {
 
     for (var key in keys) {
       if (current == null) return false;
-      
+
       // Handle array indices in path (e.g., "array.0.property")
       if (current is List && int.tryParse(key) != null) {
         final index = int.parse(key);
