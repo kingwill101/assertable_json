@@ -28,8 +28,8 @@ class AssertableJsonString {
   /// The [jsonable] parameter can be either a JSON string or a Map.
   /// Throws [ArgumentError] if the input is not valid JSON.
   AssertableJsonString(dynamic jsonable)
-      : json = jsonable,
-        decoded = _decodeJson(jsonable);
+    : json = jsonable,
+      decoded = _decodeJson(jsonable);
 
   /// Decodes the JSON input into a Map.
   ///
@@ -60,9 +60,12 @@ class AssertableJsonString {
   /// Returns this instance for method chaining.
   AssertableJsonString assertCount(int count, [String? key]) {
     final target = key != null ? jsonPath(key) : decoded;
-    expect(target.length, equals(count),
-        reason:
-            'Failed to assert that the response count matched the expected $count');
+    expect(
+      target.length,
+      equals(count),
+      reason:
+          'Failed to assert that the response count matched the expected $count',
+    );
     return this;
   }
 
@@ -94,8 +97,10 @@ class AssertableJsonString {
   /// If [structure] is null, performs an exact match.
   /// If [responseData] is provided, creates a new assertion on that data.
   /// Returns this instance for method chaining.
-  AssertableJsonString assertStructure(Map<String, dynamic>? structure,
-      [dynamic responseData]) {
+  AssertableJsonString assertStructure(
+    Map<String, dynamic>? structure, [
+    dynamic responseData,
+  ]) {
     if (structure == null) {
       return assertExact(decoded);
     }
@@ -108,14 +113,18 @@ class AssertableJsonString {
   }
 
   /// Recursively validates the structure of the JSON against expected schema.
-  void _assertStructureRecursive(dynamic actual, dynamic expected,
-      [String path = '']) {
+  void _assertStructureRecursive(
+    dynamic actual,
+    dynamic expected, [
+    String path = '',
+  ]) {
     if (expected is Map) {
       // Handle wildcard for arrays
       if (expected.containsKey('*')) {
         if (actual is! List) {
           fail(
-              'Expected an array but got ${actual.runtimeType} at path: $path');
+            'Expected an array but got ${actual.runtimeType} at path: $path',
+          );
         }
 
         final wildcardStructure = expected['*'];
@@ -128,11 +137,17 @@ class AssertableJsonString {
         }
         // Handle regular map structure
         for (var key in expected.keys) {
-          expect(actual.containsKey(key), isTrue,
-              reason: 'Expected key "$key" not found in JSON at path: $path');
+          expect(
+            actual.containsKey(key),
+            isTrue,
+            reason: 'Expected key "$key" not found in JSON at path: $path',
+          );
 
           _assertStructureRecursive(
-              actual[key], expected[key], path.isEmpty ? key : '$path.$key');
+            actual[key],
+            expected[key],
+            path.isEmpty ? key : '$path.$key',
+          );
         }
       }
     } else if (expected is List) {
@@ -140,9 +155,11 @@ class AssertableJsonString {
         for (var i = 0; i < expected.length; i++) {
           final item = expected[i];
           if (item is String) {
-            expect(actual.containsKey(item), isTrue,
-                reason:
-                    'Expected key "$item" not found in JSON at path: $path');
+            expect(
+              actual.containsKey(item),
+              isTrue,
+              reason: 'Expected key "$item" not found in JSON at path: $path',
+            );
           } else {
             _assertStructureRecursive(actual, item, '$path[$i]');
           }
@@ -150,7 +167,8 @@ class AssertableJsonString {
       } else if (actual is List) {
         if (actual.length < expected.length) {
           fail(
-              'List length mismatch at path: $path. Expected ${expected.length} items but got ${actual.length}');
+            'List length mismatch at path: $path. Expected ${expected.length} items but got ${actual.length}',
+          );
         }
         for (var i = 0; i < expected.length; i++) {
           _assertStructureRecursive(actual[i], expected[i], '$path[$i]');
@@ -160,12 +178,18 @@ class AssertableJsonString {
       }
     } else {
       // Handle primitive values
-      expect(actual, isNotNull,
-          reason: 'Expected value not found in JSON at path: $path');
+      expect(
+        actual,
+        isNotNull,
+        reason: 'Expected value not found in JSON at path: $path',
+      );
       if (expected != null && expected != '*') {
-        expect(actual.runtimeType, expected.runtimeType,
-            reason:
-                'Type mismatch at path: $path. Expected ${expected.runtimeType} but got ${actual.runtimeType}');
+        expect(
+          actual.runtimeType,
+          expected.runtimeType,
+          reason:
+              'Type mismatch at path: $path. Expected ${expected.runtimeType} but got ${actual.runtimeType}',
+        );
       }
     }
   }

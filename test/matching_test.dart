@@ -21,7 +21,7 @@ void main() {
 
     test('whereNotIn matches non-equal value', () {
       final json = AssertableJson({
-        'key': [1, 2, 3]
+        'key': [1, 2, 3],
       });
       json.whereNotIn('key', [4, 5, 6]);
     });
@@ -34,7 +34,7 @@ void main() {
     test('whereContains matches substring', () {
       final json = AssertableJson({
         'key': 'test value',
-        'list': [1, 2, 3]
+        'list': [1, 2, 3],
       });
       json.whereContains('key', 'value');
 
@@ -44,7 +44,7 @@ void main() {
     test('whereIn matches value in list', () {
       final json = AssertableJson({
         'key': 2,
-        'list': [1, 2, 3]
+        'list': [1, 2, 3],
       });
       json.whereIn('key', [1, 2, 3]);
       json.whereIn('list', [1, 2, 3]);
@@ -59,30 +59,21 @@ void main() {
       final json = AssertableJson({'required': 'value'});
 
       // Should pass - optional field can be missing
-      json.matchesSchema({
-        'required': String,
-        'optional?': int,
-      });
+      json.matchesSchema({'required': String, 'optional?': int});
 
       // Should pass - optional field can be present
       final jsonWithOptional = AssertableJson({
         'required': 'value',
         'optional': 42,
       });
-      jsonWithOptional.matchesSchema({
-        'required': String,
-        'optional?': int,
-      });
+      jsonWithOptional.matchesSchema({'required': String, 'optional?': int});
     });
 
     test('matchesSchema fails on missing required field', () {
       final json = AssertableJson({'optional': 42});
 
       expect(
-        () => json.matchesSchema({
-          'required': String,
-          'optional?': int,
-        }),
+        () => json.matchesSchema({'required': String, 'optional?': int}),
         throwsA(anything),
       );
     });

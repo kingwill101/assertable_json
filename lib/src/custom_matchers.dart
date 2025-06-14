@@ -37,7 +37,9 @@ class _HasJsonPathMatcher extends Matcher {
 
   @override
   Description describe(Description description) {
-    return description.add('has JSON path [$path]${expected != null ? ' with value $expected' : ''}');
+    return description.add(
+      'has JSON path [$path]${expected != null ? ' with value $expected' : ''}',
+    );
   }
 
   @override
@@ -69,8 +71,12 @@ class _HasJsonPathMatcher extends Matcher {
   }
 
   @override
-  Description describeMismatch(dynamic item, Description mismatchDescription,
-      Map matchState, bool verbose) {
+  Description describeMismatch(
+    dynamic item,
+    Description mismatchDescription,
+    Map matchState,
+    bool verbose,
+  ) {
     final reason = matchState['reason'];
     if (reason != null) mismatchDescription.add(reason);
     return mismatchDescription;
@@ -104,8 +110,10 @@ class _JsonFragmentMatcher extends Matcher {
         }
       }
 
-      final equals =
-          const DeepCollectionEquality().equals(actual, expectedValue);
+      final equals = const DeepCollectionEquality().equals(
+        actual,
+        expectedValue,
+      );
       if (!equals) {
         matchState['reason'] =
             'Value mismatch for key ${entry.key}: expected ${entry.value} got $actual';
@@ -116,8 +124,12 @@ class _JsonFragmentMatcher extends Matcher {
   }
 
   @override
-  Description describeMismatch(dynamic item, Description mismatchDescription,
-      Map matchState, bool verbose) {
+  Description describeMismatch(
+    dynamic item,
+    Description mismatchDescription,
+    Map matchState,
+    bool verbose,
+  ) {
     final reason = matchState['reason'];
     if (reason != null) mismatchDescription.add(reason);
     return mismatchDescription;
@@ -148,8 +160,12 @@ class _JsonEqualsMatcher extends Matcher {
   }
 
   @override
-  Description describeMismatch(dynamic item, Description mismatchDescription,
-      Map matchState, bool verbose) {
+  Description describeMismatch(
+    dynamic item,
+    Description mismatchDescription,
+    Map matchState,
+    bool verbose,
+  ) {
     final reason = matchState['reason'];
     if (reason != null) mismatchDescription.add(reason);
     return mismatchDescription;

@@ -4,7 +4,9 @@ import 'package:test/test.dart';
 void main() {
   group('Custom Matchers', () {
     test('hasJsonPath success', () {
-      final data = {'user': {'id': 1}};
+      final data = {
+        'user': {'id': 1},
+      };
       expect(data, hasJsonPath('user.id'));
     });
 
@@ -19,8 +21,17 @@ void main() {
     });
 
     test('jsonEquals success', () {
-      final data = {'a': 1, 'b': {'c': 2}};
-      expect(data, jsonEquals({'b': {'c': 2}, 'a': 1}));
+      final data = {
+        'a': 1,
+        'b': {'c': 2},
+      };
+      expect(
+        data,
+        jsonEquals({
+          'b': {'c': 2},
+          'a': 1,
+        }),
+      );
     });
   });
 }

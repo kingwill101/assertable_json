@@ -102,8 +102,11 @@ mixin ConditionMixin on AssertableJsonBase {
   /// ```
   AssertableJson equals(String key, num value) {
     final actual = getRequired<num>(key);
-    expect(actual == value, isTrue,
-        reason: 'Property [$key] is not equal to $value');
+    expect(
+      actual == value,
+      isTrue,
+      reason: 'Property [$key] is not equal to $value',
+    );
     interactsWith(key);
     return this as AssertableJson;
   }
@@ -116,8 +119,11 @@ mixin ConditionMixin on AssertableJsonBase {
   /// ```
   AssertableJson notEquals(String key, num value) {
     final actual = getRequired<num>(key);
-    expect(actual != value, isTrue,
-        reason: 'Property [$key] should not equal $value');
+    expect(
+      actual != value,
+      isTrue,
+      reason: 'Property [$key] should not equal $value',
+    );
     interactsWith(key);
     return this as AssertableJson;
   }

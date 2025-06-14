@@ -5,7 +5,7 @@ void main() {
   group('HasMixin', () {
     test('count verifies list length', () {
       final json = AssertableJson({
-        'list': [1, 2, 3]
+        'list': [1, 2, 3],
       });
 
       json.count('list', 3);
@@ -13,7 +13,7 @@ void main() {
 
     test('countBetween verifies list length range', () {
       final json = AssertableJson({
-        'list': [1, 2, 3]
+        'list': [1, 2, 3],
       });
 
       json.countBetween('list', 2, 4);
@@ -26,7 +26,7 @@ void main() {
 
     test('hasNested verifies nested key existence', () {
       final json = AssertableJson({
-        'parent': {'child': 'value'}
+        'parent': {'child': 'value'},
       });
 
       json.hasNested('parent.child');

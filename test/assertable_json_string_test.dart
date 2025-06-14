@@ -19,7 +19,7 @@ void main() {
 
     test('jsonPath returns correct value', () {
       final jsonData = {
-        'key': {'nestedKey': 'nestedValue'}
+        'key': {'nestedKey': 'nestedValue'},
       };
       final jsonStringTest = AssertableJsonString(jsonData);
 
@@ -35,24 +35,24 @@ void main() {
     test('assertFragment passes with existing fragment', () {
       final jsonData = {
         'key1': 'value1',
-        'key2': {'nested': 'value2'}
+        'key2': {'nested': 'value2'},
       };
       final jsonStringTest = AssertableJsonString(jsonData);
 
       jsonStringTest.assertFragment({'key1': 'value1'});
       jsonStringTest.assertFragment({
-        'key2': {'nested': 'value2'}
+        'key2': {'nested': 'value2'},
       });
     });
 
     test('assertStructure passes with matching structure', () {
       final jsonData = {
         'key1': {'nested1': 'value1'},
-        'key2': {'nested2': 'value2'}
+        'key2': {'nested2': 'value2'},
       };
       final structure = {
         'key1': {'nested1': null},
-        'key2': {'nested2': null}
+        'key2': {'nested2': null},
       };
       final jsonStringTest = AssertableJsonString(jsonData);
 
@@ -63,10 +63,7 @@ void main() {
       final jsonData = {'key1': 'value1'};
       final jsonStringTest = AssertableJsonString(jsonData);
 
-      expect(
-        () => jsonStringTest.assertCount(2),
-        throwsA(isA<TestFailure>()),
-      );
+      expect(() => jsonStringTest.assertCount(2), throwsA(isA<TestFailure>()));
     });
 
     test('assertExact passes with identical data', () {
@@ -98,12 +95,8 @@ void main() {
 
       jsonStringTest.assertStructure({
         'users': {
-          '*': [
-            'name',
-            'age',
-            'location',
-          ],
-        }
+          '*': ['name', 'age', 'location'],
+        },
       });
     });
 
@@ -119,12 +112,8 @@ void main() {
       expect(
         () => jsonStringTest.assertStructure({
           'users': {
-            '*': [
-              'name',
-              'age',
-              'location',
-            ],
-          }
+            '*': ['name', 'age', 'location'],
+          },
         }),
         throwsA(isA<TestFailure>()),
       );
@@ -139,12 +128,8 @@ void main() {
       expect(
         () => jsonStringTest.assertStructure({
           'users': {
-            '*': [
-              'name',
-              'age',
-              'location',
-            ],
-          }
+            '*': ['name', 'age', 'location'],
+          },
         }),
         throwsA(isA<TestFailure>()),
       );

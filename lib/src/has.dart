@@ -57,13 +57,19 @@ mixin HasMixin on AssertableJsonBase {
   /// Returns this instance for method chaining.
   AssertableJson count(dynamic key, [int? length]) {
     if (length == null) {
-      expect(this.length(), equals(key),
-          reason: 'Root level does not have the expected size');
+      expect(
+        this.length(),
+        equals(key),
+        reason: 'Root level does not have the expected size',
+      );
       return this as AssertableJson;
     }
 
-    expect(this.length(key), equals(length),
-        reason: 'Property [$key] does not have the expected size');
+    expect(
+      this.length(key),
+      equals(length),
+      reason: 'Property [$key] does not have the expected size',
+    );
     interactsWith(key);
     return this as AssertableJson;
   }
@@ -84,8 +90,11 @@ mixin HasMixin on AssertableJsonBase {
   /// Returns this instance for method chaining.
   AssertableJson countBetween(dynamic key, dynamic min, dynamic max) {
     final length = this.length(key);
-    expect(length >= min && length <= max, isTrue,
-        reason: 'Property [$key] size is not between $min and $max');
+    expect(
+      length >= min && length <= max,
+      isTrue,
+      reason: 'Property [$key] size is not between $min and $max',
+    );
     interactsWith(key);
     return this as AssertableJson;
   }
@@ -117,8 +126,11 @@ mixin HasMixin on AssertableJsonBase {
   /// ```
   ///
   /// Returns this instance for method chaining.
-  AssertableJson has(dynamic key,
-      [dynamic arg1, AssertableJsonCallback? arg2]) {
+  AssertableJson has(
+    dynamic key, [
+    dynamic arg1,
+    AssertableJsonCallback? arg2,
+  ]) {
     expect(exists(key), isTrue, reason: 'Property [$key] does not exist');
     interactsWith(key);
 
@@ -158,8 +170,11 @@ mixin HasMixin on AssertableJsonBase {
   ///
   /// Returns this instance for method chaining.
   AssertableJson hasNested(String path) {
-    expect(exists(path), isTrue,
-        reason: 'Expected JSON to have nested key $path');
+    expect(
+      exists(path),
+      isTrue,
+      reason: 'Expected JSON to have nested key $path',
+    );
     interactsWith(path);
     return this as AssertableJson;
   }
@@ -216,8 +231,11 @@ mixin HasMixin on AssertableJsonBase {
   AssertableJson hasValues(List<dynamic> values) {
     final allValues = this.values();
     for (var value in values) {
-      expect(allValues.contains(value), isTrue,
-          reason: 'Expected JSON to have value $value');
+      expect(
+        allValues.contains(value),
+        isTrue,
+        reason: 'Expected JSON to have value $value',
+      );
     }
     return this as AssertableJson;
   }
@@ -250,8 +268,11 @@ mixin HasMixin on AssertableJsonBase {
 
     if (keys is List<String>) {
       final hasAnyKey = keys.any((key) => exists(key));
-      expect(hasAnyKey, isTrue,
-          reason: 'None of properties [${keys.join(", ")}] exist');
+      expect(
+        hasAnyKey,
+        isTrue,
+        reason: 'None of properties [${keys.join(", ")}] exist',
+      );
     }
     return this as AssertableJson;
   }
@@ -309,9 +330,11 @@ mixin HasMixin on AssertableJsonBase {
   ///
   /// Returns this instance for method chaining.
   AssertableJson missing(String key) {
-    expect(exists(key), isFalse,
-        reason:
-            'Property [$key] was found while it was expected to be missing');
+    expect(
+      exists(key),
+      isFalse,
+      reason: 'Property [$key] was found while it was expected to be missing',
+    );
     return this as AssertableJson;
   }
 }
