@@ -182,6 +182,8 @@ json
 
 ## Additional Features
 
+- **Custom Matchers**: Integrate with `expect` for quick one-off assertions
+
 - **Dot Notation**: Access nested properties directly with simple path syntax
 - **Property Tracking**: Automatically tracks which properties have been tested
 - **Debugging**: Built-in debugging tools with `dd()` and `printR()`
@@ -189,6 +191,15 @@ json
 - **Type Safety**: Full type safety with Dart's static typing
 - **Fluent API**: Chain multiple assertions for cleaner code
 - **Detailed Errors**: Clear error messages for failed assertions
+
+## Custom Matchers
+
+Use these matchers directly with `expect`:
+```dart
+final data = {"id": 1, "name": "Item"};
+expect(data, hasJsonPath("id"));
+expect(data, jsonContainsFragment({"name": "Item"}));
+```
 
 ## Contributing
 

@@ -1,3 +1,6 @@
+## 0.2.2
+- Added custom matchers for direct expect() usage
+
 ## 0.2.1
 - Add list support in whereContains, whereIn, and whereNotIn methods
 - Add complete examples for dart doc

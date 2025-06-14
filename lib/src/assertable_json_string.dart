@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:test/expect.dart';
 
+import 'custom_matchers.dart';
+
 /// A utility class for asserting JSON data in tests.
 ///
 /// This class provides methods to validate JSON data structure, content,
@@ -69,11 +71,7 @@ class AssertableJsonString {
   /// Compares the JSON after sorting keys to ensure consistent ordering.
   /// Returns this instance for method chaining.
   AssertableJsonString assertExact(Map<String, dynamic> data) {
-    expect(
-      jsonEncode(_sortKeys(decoded)),
-      equals(jsonEncode(_sortKeys(data))),
-      reason: 'JSON does not match exactly',
-    );
+    expect(decoded, jsonEquals(data));
     return this;
   }
 
@@ -82,13 +80,7 @@ class AssertableJsonString {
   /// The JSON may contain additional fields not present in the fragment.
   /// Returns this instance for method chaining.
   AssertableJsonString assertFragment(Map<String, dynamic> data) {
-    final actual = jsonEncode(_sortKeys(decoded));
-    for (var entry in _sortKeys(data).entries) {
-      final fragment = jsonEncode({entry.key: entry.value});
-      expect(
-          actual.contains(fragment.substring(1, fragment.length - 1)), isTrue,
-          reason: 'Unable to find JSON fragment: $fragment');
-    }
+    expect(decoded, jsonContainsFragment(data));
     return this;
   }
 
@@ -176,18 +168,6 @@ class AssertableJsonString {
                 'Type mismatch at path: $path. Expected ${expected.runtimeType} but got ${actual.runtimeType}');
       }
     }
-  }
-
-  /// Creates a new map with sorted keys for consistent comparison.
-  Map<String, dynamic> _sortKeys(Map<String, dynamic> map) {
-    final sorted = Map<String, dynamic>.from(map);
-    sorted.forEach((key, value) {
-      if (value is Map) {
-        sorted[key] = _sortKeys(Map<String, dynamic>.from(value));
-      }
-    });
-    return Map.fromEntries(
-        sorted.entries.toList()..sort((a, b) => a.key.compareTo(b.key)));
   }
 
   /// Resolves a dot-notation path to its value in the JSON.
