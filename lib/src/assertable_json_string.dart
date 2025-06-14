@@ -28,8 +28,8 @@ class AssertableJsonString {
   /// The [jsonable] parameter can be either a JSON string or a Map.
   /// Throws [ArgumentError] if the input is not valid JSON.
   AssertableJsonString(dynamic jsonable)
-    : json = jsonable,
-      decoded = _decodeJson(jsonable);
+      : json = jsonable,
+        decoded = _decodeJson(jsonable);
 
   /// Decodes the JSON input into a Map.
   ///

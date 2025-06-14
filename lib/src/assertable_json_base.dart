@@ -130,8 +130,8 @@ abstract class AssertableJsonBase with InteractionMixin {
     return target is List
         ? target.length
         : target is Map
-        ? target.length
-        : 0;
+            ? target.length
+            : 0;
   }
 
   // Get all keys at path
