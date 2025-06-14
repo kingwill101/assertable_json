@@ -91,6 +91,14 @@ json
   .whereContains('user.emails.0', '@');      // Pattern matching
 ```
 
+### Quick Value Access
+
+Use bracket notation to fetch values directly:
+
+```dart
+final email = json['user.email'];
+```
+
 ### Numeric Validations
 
 ```dart
