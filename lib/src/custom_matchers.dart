@@ -37,8 +37,7 @@ class _HasJsonPathMatcher extends Matcher {
 
   @override
   Description describe(Description description) {
-    return description.add('has JSON path [$path]' +
-        (expected != null ? ' with value $expected' : ''));
+    return description.add('has JSON path [$path]${expected != null ? ' with value $expected' : ''}');
   }
 
   @override
