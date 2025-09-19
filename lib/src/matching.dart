@@ -66,7 +66,8 @@ mixin MatchingMixin on AssertableJsonBase {
     });
 
     final sorted = Map.fromEntries(
-        value.entries.toList()..sort((a, b) => a.key.compareTo(b.key)));
+      value.entries.toList()..sort((a, b) => a.key.compareTo(b.key)),
+    );
     value.clear();
     value.addAll(sorted);
   }
@@ -108,8 +109,11 @@ mixin MatchingMixin on AssertableJsonBase {
     final actual = get(key);
 
     if (expected is Function) {
-      expect(expected(actual), isTrue,
-          reason: 'Property [$key] was marked as invalid using a closure');
+      expect(
+        expected(actual),
+        isTrue,
+        reason: 'Property [$key] was marked as invalid using a closure',
+      );
       return (this as AssertableJson);
     }
 
@@ -120,8 +124,11 @@ mixin MatchingMixin on AssertableJsonBase {
       ensureSorted(actual as Map<String, dynamic>);
     }
 
-    expect(actual, equals(expected),
-        reason: 'Property [$key] does not match expected value');
+    expect(
+      actual,
+      equals(expected),
+      reason: 'Property [$key] does not match expected value',
+    );
 
     return (this as AssertableJson);
   }
@@ -155,12 +162,18 @@ mixin MatchingMixin on AssertableJsonBase {
   AssertableJson whereNot(String key, dynamic unexpected) {
     final actual = getRequired(key);
     if (unexpected is Function) {
-      expect(unexpected(actual), isFalse,
-          reason: 'Property [$key] was marked as invalid using a closure');
+      expect(
+        unexpected(actual),
+        isFalse,
+        reason: 'Property [$key] was marked as invalid using a closure',
+      );
     } else {
-      expect(actual, isNot(equals(unexpected)),
-          reason:
-              'Property [$key] contains value that should be missing: $unexpected');
+      expect(
+        actual,
+        isNot(equals(unexpected)),
+        reason:
+            'Property [$key] contains value that should be missing: $unexpected',
+      );
     }
     interactsWith(key);
     return this as AssertableJson;
@@ -242,8 +255,11 @@ mixin MatchingMixin on AssertableJsonBase {
     }
 
     final actual = getRequired(key);
-    expect(actual, isA<T>(),
-        reason: 'Property [$key] is not of expected type [${T.toString()}]');
+    expect(
+      actual,
+      isA<T>(),
+      reason: 'Property [$key] is not of expected type [${T.toString()}]',
+    );
     interactsWith(key);
     return this as AssertableJson;
   }
@@ -318,16 +334,25 @@ mixin MatchingMixin on AssertableJsonBase {
     if (actual is List) {
       if (expected is List) {
         for (var value in expected) {
-          expect(actual.contains(value), isTrue,
-              reason: 'Expected $key to contain $value');
+          expect(
+            actual.contains(value),
+            isTrue,
+            reason: 'Expected $key to contain $value',
+          );
         }
       } else {
-        expect(actual.contains(expected), isTrue,
-            reason: 'Expected $key to contain $expected');
+        expect(
+          actual.contains(expected),
+          isTrue,
+          reason: 'Expected $key to contain $expected',
+        );
       }
     } else {
-      expect(actual.toString().contains(expected.toString()), isTrue,
-          reason: 'Property [$key] does not contain [$expected]');
+      expect(
+        actual.toString().contains(expected.toString()),
+        isTrue,
+        reason: 'Property [$key] does not contain [$expected]',
+      );
     }
     interactsWith(key);
     return this as AssertableJson;
@@ -359,13 +384,19 @@ mixin MatchingMixin on AssertableJsonBase {
     final actual = getRequired(key);
     if (actual is List) {
       for (var value in values) {
-        expect(actual.contains(value), isTrue,
-            reason:
-                'Expected key `$key` to contain value $value, actual: $actual');
+        expect(
+          actual.contains(value),
+          isTrue,
+          reason:
+              'Expected key `$key` to contain value $value, actual: $actual',
+        );
       }
     } else {
-      expect(values.contains(actual), isTrue,
-          reason: 'Expected $key to be one of $values');
+      expect(
+        values.contains(actual),
+        isTrue,
+        reason: 'Expected $key to be one of $values',
+      );
     }
 
     interactsWith(key);
@@ -398,13 +429,19 @@ mixin MatchingMixin on AssertableJsonBase {
     final actual = getRequired(key);
     if (actual is List) {
       for (var value in values) {
-        expect(actual.contains(value), isFalse,
-            reason:
-                'Expected key `$key` to not contain value $value, actual: $actual');
+        expect(
+          actual.contains(value),
+          isFalse,
+          reason:
+              'Expected key `$key` to not contain value $value, actual: $actual',
+        );
       }
     } else {
-      expect(values.contains(actual), isFalse,
-          reason: 'Expected $key to not be one of $values');
+      expect(
+        values.contains(actual),
+        isFalse,
+        reason: 'Expected $key to not be one of $values',
+      );
     }
     interactsWith(key);
     return this as AssertableJson;
@@ -467,9 +504,12 @@ mixin MatchingMixin on AssertableJsonBase {
       try {
         (this as AssertableJson).has(actualKey);
         final value = get(actualKey);
-        expect(value.runtimeType, equals(type),
-            reason:
-                'Expected $actualKey to be of type $type but was ${value.runtimeType}');
+        expect(
+          value.runtimeType,
+          equals(type),
+          reason:
+              'Expected $actualKey to be of type $type but was ${value.runtimeType}',
+        );
         interactsWith(actualKey);
       } catch (e) {
         if (!isOptional) {

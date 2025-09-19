@@ -14,19 +14,19 @@ void main() {
           'tags': ['developer', 'dart'],
           'scores': [85, 90, 95],
           'active': true,
-          'rating': 4.5
+          'rating': 4.5,
         },
         'settings': {
           'notifications': true,
           'theme': 'dark',
-          'favorites': [1, 2, 3]
-        }
+          'favorites': [1, 2, 3],
+        },
       },
       'posts': [
         {'id': 1, 'title': 'First Post', 'comments': 5},
-        {'id': 2, 'title': 'Second Post', 'comments': 10}
+        {'id': 2, 'title': 'Second Post', 'comments': 10},
       ],
-      'stats': {'views': 100, 'likes': 25, 'dislikes': -5, 'multiplier': 2.5}
+      'stats': {'views': 100, 'likes': 25, 'dislikes': -5, 'multiplier': 2.5},
     });
   });
 
@@ -47,7 +47,7 @@ void main() {
       json.hasAll([
         'user.profile.name.first',
         'user.profile.name.last',
-        'user.settings.theme'
+        'user.settings.theme',
       ]);
     });
 
@@ -71,7 +71,7 @@ void main() {
       json.missingAll([
         'user.profile.nonexistent',
         'user.settings.unknown',
-        'nonexistent.key'
+        'nonexistent.key',
       ]);
     });
   });
@@ -97,7 +97,7 @@ void main() {
       json.whereAll({
         'user.profile.name.first': 'John',
         'user.profile.name.last': 'Doe',
-        'user.profile.age': 30
+        'user.profile.age': 30,
       });
     });
 
@@ -113,7 +113,7 @@ void main() {
       json.whereAllType<String>([
         'user.profile.name.first',
         'user.profile.name.last',
-        'user.settings.theme'
+        'user.settings.theme',
       ]);
     });
 

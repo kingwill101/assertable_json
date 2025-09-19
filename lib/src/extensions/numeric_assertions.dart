@@ -58,8 +58,11 @@ extension NumericAssertions on num {
   /// - [value]: The value to compare against.
   /// - [message]: Optional custom message for the failure reason.
   void assertGreaterThan(num value, {String? message}) {
-    expect(this > value, isTrue,
-        reason: message ?? 'Expected $this to be greater than $value');
+    expect(
+      this > value,
+      isTrue,
+      reason: message ?? 'Expected $this to be greater than $value',
+    );
   }
 
   /// Asserts that this number is less than [value].
@@ -76,8 +79,11 @@ extension NumericAssertions on num {
   /// - [value]: The value to compare against.
   /// - [message]: Optional custom message for the failure reason.
   void assertLessThan(num value, {String? message}) {
-    expect(this < value, isTrue,
-        reason: message ?? 'Expected $this to be less than $value');
+    expect(
+      this < value,
+      isTrue,
+      reason: message ?? 'Expected $this to be less than $value',
+    );
   }
 
   /// Asserts that this number is greater than or equal to [value].
@@ -95,9 +101,11 @@ extension NumericAssertions on num {
   /// - [value]: The value to compare against.
   /// - [message]: Optional custom message for the failure reason.
   void assertGreaterOrEqual(num value, {String? message}) {
-    expect(this >= value, isTrue,
-        reason:
-            message ?? 'Expected $this to be greater than or equal to $value');
+    expect(
+      this >= value,
+      isTrue,
+      reason: message ?? 'Expected $this to be greater than or equal to $value',
+    );
   }
 
   /// Asserts that this number is less than or equal to [value].
@@ -115,8 +123,11 @@ extension NumericAssertions on num {
   /// - [value]: The value to compare against.
   /// - [message]: Optional custom message for the failure reason.
   void assertLessOrEqual(num value, {String? message}) {
-    expect(this <= value, isTrue,
-        reason: message ?? 'Expected $this to be less than or equal to $value');
+    expect(
+      this <= value,
+      isTrue,
+      reason: message ?? 'Expected $this to be less than or equal to $value',
+    );
   }
 
   /// Asserts that this number is between [min] and [max] (inclusive).
@@ -137,8 +148,11 @@ extension NumericAssertions on num {
   /// - [max]: The maximum value of the range.
   /// - [message]: Optional custom message for the failure reason.
   void assertBetween(num min, num max, {String? message}) {
-    expect(this >= min && this <= max, isTrue,
-        reason: message ?? 'Expected $this to be between $min and $max');
+    expect(
+      this >= min && this <= max,
+      isTrue,
+      reason: message ?? 'Expected $this to be between $min and $max',
+    );
   }
 
   /// Asserts that this number is evenly divisible by [divisor].
@@ -156,8 +170,11 @@ extension NumericAssertions on num {
   /// - [divisor]: The number to divide by.
   /// - [message]: Optional custom message for the failure reason.
   void assertDivisibleBy(num divisor, {String? message}) {
-    expect(this % divisor == 0, isTrue,
-        reason: message ?? 'Expected $this to be divisible by $divisor');
+    expect(
+      this % divisor == 0,
+      isTrue,
+      reason: message ?? 'Expected $this to be divisible by $divisor',
+    );
   }
 
   /// Asserts that this number is a multiple of [factor].
@@ -175,8 +192,11 @@ extension NumericAssertions on num {
   /// - [factor]: The factor to check against.
   /// - [message]: Optional custom message for the failure reason.
   void assertMultipleOf(num factor, {String? message}) {
-    expect(this / factor % 1 == 0, isTrue,
-        reason: message ?? 'Expected $this to be a multiple of $factor');
+    expect(
+      this / factor % 1 == 0,
+      isTrue,
+      reason: message ?? 'Expected $this to be a multiple of $factor',
+    );
   }
 
   /// Asserts that this number is positive (greater than zero).
@@ -193,8 +213,11 @@ extension NumericAssertions on num {
   ///
   /// - [message]: Optional custom message for the failure reason.
   void assertPositive({String? message}) {
-    expect(this > 0, isTrue,
-        reason: message ?? 'Expected $this to be positive');
+    expect(
+      this > 0,
+      isTrue,
+      reason: message ?? 'Expected $this to be positive',
+    );
   }
 
   /// Asserts that this number is negative (less than zero).
@@ -211,8 +234,11 @@ extension NumericAssertions on num {
   ///
   /// - [message]: Optional custom message for the failure reason.
   void assertNegative({String? message}) {
-    expect(this < 0, isTrue,
-        reason: message ?? 'Expected $this to be negative');
+    expect(
+      this < 0,
+      isTrue,
+      reason: message ?? 'Expected $this to be negative',
+    );
   }
 
   /// Asserts that this number is exactly zero.
@@ -247,8 +273,11 @@ extension NumericAssertions on num {
   ///
   /// - [message]: Optional custom message for the failure reason.
   void assertEven({String? message}) {
-    expect(this % 2 == 0, isTrue,
-        reason: message ?? 'Expected $this to be even');
+    expect(
+      this % 2 == 0,
+      isTrue,
+      reason: message ?? 'Expected $this to be even',
+    );
   }
 
   /// Asserts that this number is odd.
@@ -267,8 +296,11 @@ extension NumericAssertions on num {
   ///
   /// - [message]: Optional custom message for the failure reason.
   void assertOdd({String? message}) {
-    expect(this % 2 != 0, isTrue,
-        reason: message ?? 'Expected $this to be odd');
+    expect(
+      this % 2 != 0,
+      isTrue,
+      reason: message ?? 'Expected $this to be odd',
+    );
   }
 
   /// Asserts that this number is prime.
@@ -329,7 +361,10 @@ extension NumericAssertions on num {
   ///
   /// - [message]: Optional custom message for the failure reason.
   void assertPerfectSquare({String? message}) {
-    expect(sqrt(this) % 1 == 0, isTrue,
-        reason: message ?? 'Expected $this to be a perfect square');
+    expect(
+      sqrt(this) % 1 == 0,
+      isTrue,
+      reason: message ?? 'Expected $this to be a perfect square',
+    );
   }
 }

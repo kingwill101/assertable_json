@@ -182,14 +182,23 @@ abstract class AssertableJsonBase with InteractionMixin {
   void assertEmpty([String? path]) {
     final value = path != null ? get(path) : json;
     if (value is String) {
-      expect(value.isEmpty, isTrue,
-          reason: 'Expected empty string at path [$path]. Got: "$value".');
+      expect(
+        value.isEmpty,
+        isTrue,
+        reason: 'Expected empty string at path [$path]. Got: "$value".',
+      );
     } else if (value is List) {
-      expect(value.isEmpty, isTrue,
-          reason: 'Expected empty list at path [$path]. Got: $value.');
+      expect(
+        value.isEmpty,
+        isTrue,
+        reason: 'Expected empty list at path [$path]. Got: $value.',
+      );
     } else if (value is Map) {
-      expect(value.isEmpty, isTrue,
-          reason: 'Expected empty map at path [$path]. Got: $value.');
+      expect(
+        value.isEmpty,
+        isTrue,
+        reason: 'Expected empty map at path [$path]. Got: $value.',
+      );
     } else {
       fail('Value at path [$path] is not a String, List, or Map.');
     }
@@ -238,13 +247,19 @@ abstract class AssertableJsonBase with InteractionMixin {
   /// Returns the current [AssertableJson] instance to allow method chaining.
   AssertableJson first(Function(AssertableJson) callback) {
     if (json is List) {
-      expect(json.isNotEmpty, isTrue,
-          reason: 'Cannot scope onto the first element because array is empty');
+      expect(
+        json.isNotEmpty,
+        isTrue,
+        reason: 'Cannot scope onto the first element because array is empty',
+      );
       return AssertableJson(json[0]).tap(callback);
     }
 
-    expect(json.isNotEmpty, isTrue,
-        reason: 'Cannot scope onto the first element because object is empty');
+    expect(
+      json.isNotEmpty,
+      isTrue,
+      reason: 'Cannot scope onto the first element because object is empty',
+    );
     final key = json.keys.first;
     interactsWith(key);
     return scope(key, callback);
@@ -257,8 +272,11 @@ abstract class AssertableJsonBase with InteractionMixin {
   /// Returns the current [AssertableJson] instance to allow for method chaining.
   AssertableJson each(Function(AssertableJson) callback) {
     if (json is List) {
-      expect(json.isNotEmpty, isTrue,
-          reason: 'Cannot iterate over empty array');
+      expect(
+        json.isNotEmpty,
+        isTrue,
+        reason: 'Cannot iterate over empty array',
+      );
       for (var item in json) {
         AssertableJson(item).tap(callback);
       }

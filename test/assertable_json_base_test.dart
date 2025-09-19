@@ -5,7 +5,7 @@ void main() {
   group('AssertableJsonBase', () {
     test('scope with valid key', () {
       final data = {
-        'nested': {'key': 'value'}
+        'nested': {'key': 'value'},
       };
       final json = AssertableJson(data);
 
@@ -27,7 +27,7 @@ void main() {
     test('first on non-empty json', () {
       final data = {
         'firstKey': {'value': 'first'},
-        'secondKey': {'value': 'second'}
+        'secondKey': {'value': 'second'},
       };
       final json = AssertableJson(data);
 
@@ -40,18 +40,15 @@ void main() {
       final data = {};
       final json = AssertableJson(data);
 
-      expect(
-        () => json.first((firstJson) {}),
-        throwsA(isA<TestFailure>()),
-      );
+      expect(() => json.first((firstJson) {}), throwsA(isA<TestFailure>()));
     });
 
     test('each iterates over array elements', () {
       final data = {
         'items': [
           {'id': 1, 'name': 'first'},
-          {'id': 2, 'name': 'second'}
-        ]
+          {'id': 2, 'name': 'second'},
+        ],
       };
       final json = AssertableJson(data);
       final ids = [];
@@ -71,7 +68,7 @@ void main() {
     test('each iterates over object properties', () {
       final data = {
         'key1': {'value': 'first'},
-        'key2': {'value': 'second'}
+        'key2': {'value': 'second'},
       };
       final json = AssertableJson(data);
       final values = [];

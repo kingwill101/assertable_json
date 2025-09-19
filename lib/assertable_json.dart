@@ -41,3 +41,4 @@ library;
 export 'src/assertable_json.dart';
 export 'src/assertable_json_base.dart';
 export 'src/assertable_json_string.dart';
+export 'src/custom_matchers.dart';
