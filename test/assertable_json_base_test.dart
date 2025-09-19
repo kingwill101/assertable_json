@@ -83,5 +83,13 @@ void main() {
 
       expect(values, equals(['first', 'second']));
     });
+
+    test('bracket operator returns value', () {
+      final json = AssertableJson({'user': {'id': 42}});
+
+      final id = json['user.id'];
+
+      expect(id, equals(42));
+    });
   });
 }

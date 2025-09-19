@@ -46,6 +46,15 @@ abstract class AssertableJsonBase with InteractionMixin {
     return current as T?;
   }
 
+  /// Provides bracket-style access to values using dot notation paths.
+  ///
+  /// ```dart
+  /// final id = json['user.id'];
+  /// ```
+  ///
+  /// Equivalent to calling `get('user.id')`.
+  dynamic operator [](String path) => get(path);
+
   // Get required value or throw
   /// Gets the value at the specified [path] and casts it to the specified type [T].
   ///
